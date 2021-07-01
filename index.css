@@ -14,3 +14,14 @@ body {
 	margin-top: 20px;
 }
 
+.movie {
+	color: brown;
+	border-style: dotted;
+	border-color: grey;
+	
+}
+
+.movies-container {
+	/* display: flex; */
+	
+}
