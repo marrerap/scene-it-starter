@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	// code here will execute after the document is loaded
     let watchlistJSON = localStorage.getItem('watchlist');
     let watchlist = JSON.parse(watchlistJSON)
-    console.log(watchlist)
+    
     renderMovies(watchlist)
     document.getElementById('movies-container').innerHTML = renderMovies(watchlist);
     document.addEventListener('click', (e) => {        
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             let movieID = e.target.dataset.imdbId
             removeFromWatchList(movieID)
-            console.log(movieID)
+            
         }    
             
         
@@ -19,12 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function renderMovies(movieArray) {   
     const movieHtmlArray = movieArray.map(currentMovie => {      
-        return `<div class='movie col-6' style='padding-top: 15px;'>
-              <img src="${currentMovie.Poster}" alt="">
-              <h5 class='title'>${currentMovie.Title}</h5>
-              <p>${currentMovie.Year}</p>
-              <a href="#" class="clear btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Clear</a>
-            </div>`        
+        return `<div class="card" style="width: 18rem; margin: 15px">
+        <img src="${currentMovie.Poster}" class="card-img-top" alt="No Poster Available">
+        <div class="card-body">
+        <h5 class="card-title">${currentMovie.Title}</h5>
+        <p class="card-text">${currentMovie.Year}</p>
+        <a href="#" class="add-button btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Remove</a>
+        </div>
+        </div>`        
     })  
     return movieHtmlArray.join('');
 }
@@ -38,8 +40,8 @@ function removeFromWatchList(movieID) {
     if (watchlist == null) {
         watchlist = [];
     }
-    console.log(movie)
-    delete movie
+    watchlist.splice(watchlist.indexOf(movie))
+   
     watchlistJSON = JSON.stringify(watchlist);
     localStorage.setItem('watchlist', watchlistJSON);
 }

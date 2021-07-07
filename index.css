@@ -1,5 +1,7 @@
 body {
 	background-color: #B2E9FD;
+	border-width: thin;
+	border-color: #b6262b;
 }
 
 .header h2 {
@@ -10,18 +12,7 @@ body {
 	color: #50524F;
 }
 
-.results {
-	margin-top: 20px;
-}
 
-.movie {
-	color: brown;
-	border-style: dotted;
-	border-color: grey;
-	
-}
 
-.movies-container {
-	/* display: flex; */
-	
-}
+
+

@@ -5,47 +5,25 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             let movieID = e.target.dataset.imdbId
             saveToWatchList(movieID)
-        }
-        if (e.target.classList.contains("clear")) {
-            e.preventDefault();
-            let movieID = e.target.dataset.imdbId
-            removeFromWatchList(movieID)
-        }    
-            
-        
+        }        
     }) 
 });
-
 function saveToWatchList(movieID) {
     const movie = movieData.find((currentMovie) => {
         return currentMovie.imdbID == movieID
-        
+                
     });
     let watchlistJSON = localStorage.getItem('watchlist');
     let watchlist = JSON.parse(watchlistJSON);
     if (watchlist == null) {
         watchlist = [];
-    }
+}
     watchlist.push(movie)
     watchlistJSON = JSON.stringify(watchlist);
     localStorage.setItem('watchlist', watchlistJSON);
-    
-}
-function removeFromWatchList(movieID) {
-    const movie = movieData.find((currentMovie) => {
-        return currentMovie.imdbID == movieID
         
-    });
-    let watchlistJSON = localStorage.getItem('watchlist');
-    let watchlist = JSON.parse(watchlistJSON);
-    if (watchlist == null) {
-        watchlist = [];
-    }
-    watchlist.remove(movie)
-    watchlistJSON = JSON.stringify(watchlist);
-    localStorage.setItem('watchlist', watchlistJSON);
-    
 }
+
 
 
 // this next function will take a database and for each entry, create a block of code
@@ -62,13 +40,15 @@ function renderMovies(movieArray) {
     // create an element used to display the title of of the Movie
     const movieHtmlArray = movieArray.map((currentMovie) => {
         // create a title inside of a div using the h2 and the title of the 
-        // movie from the results of the map function
-        return `<div class='movie col-6' style='padding-top: 15px;'>
-              <img src="${currentMovie.Poster}" alt="">
-              <h5 class='title'>${currentMovie.Title}</h5>
-              <p>${currentMovie.Year}</p>
-              <a href="#" class="add-button btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Add</a>              
-            </div>`
+        // movie from the results of the map function        
+    return `<div class="card" style="width: 18rem; margin: 15px">
+        <img src="${currentMovie.Poster}" class="card-img-top" alt="No Poster Available">
+        <div class="card-body">
+        <h5 class="card-title">${currentMovie.Title}</h5>
+        <p class="card-text">${currentMovie.Year}</p>
+        <a href="#" class="add-button btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Add to Watch List</a>
+        </div>
+        </div>`
         
     })
     // add the previous expression to movieHtmlArray variable as a string.  
@@ -86,9 +66,16 @@ const myForm = document.getElementById('search-form');
 myForm.addEventListener(('submit'), (e) => {
     // prevent the default action of refreshing the page
     e.preventDefault();
-    // create a link to the element I want to add the results to and display the
-    // results
-    document.getElementById('movies-container').innerHTML = renderMovies(movieData);
+    const searchString = document.getElementById('search-bar').value
+    const urlEncodedSearchString = encodeURIComponent(searchString)
+    axios.get("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString).then(res => {
+            console.log(res.data);
+            document.getElementById('movies-container').innerHTML = renderMovies(res.data.Search);    
+            movieData = res.data.Search
+           
+           
+    })
+  
     
 
 })
@@ -105,22 +92,3 @@ myForm.addEventListener(('submit'), (e) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// <div class="card" style="width: 18rem;">
-//     <img src="..." class="card-img-top" alt="...">
-//     <div class="card-body">
-//         <h5 class="card-title">Card title</h5>
-//         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//         <a href="#" class="btn btn-primary">Go somewhere</a>
-//     </div>
-// </div>
