@@ -37,10 +37,10 @@ function saveToWatchList(movieID) {
 // parameter
 function renderMovies(movieArray) {
     // use the map function to map a database and run a function that will 
-    // create an element used to display the title of of the Movie
+    // create a block of code used to display the results in a card format
     const movieHtmlArray = movieArray.map((currentMovie) => {
-        // create a title inside of a div using the h2 and the title of the 
-        // movie from the results of the map function        
+        // when this function is run it will return the following lines of code 
+        // that will be added to the dom where it is needed 
     return `<div class="card" style="width: 18rem; margin: 15px">
         <img src="${currentMovie.Poster}" class="card-img-top" alt="No Poster Available">
         <div class="card-body">
@@ -69,7 +69,7 @@ myForm.addEventListener(('submit'), (e) => {
     const searchString = document.getElementById('search-bar').value
     const urlEncodedSearchString = encodeURIComponent(searchString)
     axios.get("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString).then(res => {
-            console.log(res.data);
+            
             document.getElementById('movies-container').innerHTML = renderMovies(res.data.Search);    
             movieData = res.data.Search
            
