@@ -23,8 +23,8 @@ function renderMovies(movieArray) {
         <img src="${currentMovie.Poster}" class="card-img-top" alt="No Poster Available">
         <div class="card-body">
         <h5 class="card-title">${currentMovie.Title}</h5>
-        <p class="card-text">${currentMovie.Year}</p>
-        <a href="#" class="add-button btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Remove</a>
+        <p class="card-text" style="color: black;">${currentMovie.Year}</p>
+        <a href="#" class="clear btn btn-primary" data-imdb-id="${currentMovie.imdbID}">Remove</a>
         </div>
         </div>`        
     })  
